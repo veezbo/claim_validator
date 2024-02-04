@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "ClaimValidator",
+  "short_name": "ClaimValidator",
+  "description": "Increase trust on internet by checking whether the claims people make are really substantiated by their sources or not.",
+//  "icons": {
+//    "16": "icons/icon16.png",
+//    "48": "icons/icon48.png",
+//    "128": "icons/icon128.png"
+//  },
+  "version": "1.0",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "offscreen",
+    "<all_urls>"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://old.reddit.com/*"
+      ],
+      "js": [
+        "bundle.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
