@@ -2,10 +2,13 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/content.js', // Your main script file
+  entry: {
+    content: './src/content.js',
+    background: './src/background.js',
+  },
   output: {
-    path: path.resolve(__dirname, 'src'), // Output directory
-    filename: 'bundle.js' // Output bundle file
+    path: path.resolve(__dirname, 'dist'), // Output directory
+    filename: '[name].js' // Output bundle file, [name] will be replaced by the entry point name
   },
   // mode: 'development',
   mode: 'production',

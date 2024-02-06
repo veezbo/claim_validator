@@ -11,7 +11,6 @@
   },
   "version": "1.0",
   "author": "vibhor.kumar.me@gmail.com",
-  "default_locale": "en",
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -32,7 +31,7 @@
         "https://old.reddit.com/*"
       ],
       "js": [
-        "bundle.js"
+        "content.js"
       ],
       "run_at": "document_idle"
     }
