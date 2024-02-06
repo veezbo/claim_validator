@@ -3,3 +3,4 @@ node_modules
 test_prompts
 **/.DS_STORE
 **/.idea
+**/*.zip
