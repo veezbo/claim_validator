@@ -1,5 +1,5 @@
 // Function to process the comment, extracting both text and hyperlinks
-import {CLAIM_REGEX, URL_REGEX} from "./regex";
+import {URL_REGEX} from "./regex";
 import {extractText} from "./webpage";
 import {
     getClaimExtractionPrompt,
@@ -61,36 +61,6 @@ function findCommentTaglines(document, callback) {
     });
 }
 
-// Function to walk through the DOM and find text nodes
-function findTextNodes(document, callback) {
-
-    // Selector for Reddit comments - this would need to be updated if Reddit changes their layout
-    const commentSelector = '.commentarea .md';
-
-    // Get all comment elements
-    const commentElements = document.querySelectorAll(commentSelector);
-
-    // // Use a Set to ensure uniqueness
-    // const uniqueCommentElements = new Set();
-
-    // Iterate over each comment element
-    commentElements.forEach((element) => {
-        // Process the comment to include text content and hyperlinks
-        const commentText = processComment(element);
-
-        if (CLAIM_REGEX.test(commentText)) {
-          console.log(commentText);
-
-          callback(element, commentText);
-          // // Add the comment element to the set of unique comments
-          // uniqueCommentElements.add(element);
-        }
-    });
-
-}
-
-
-
 function onButtonClick(event) {
     // Disable the button to prevent further clicks
     event.target.disabled = true;
@@ -110,11 +80,16 @@ function onButtonClick(event) {
                 const claimExtractorPrompt = getClaimExtractionPrompt(commentText);
                 console.log("ClaimExtractorPrompt: " + claimExtractorPrompt);
                 getExtractedClaims(claimExtractorPrompt)
-                    .then(claims => {
-                        console.log("Claims: " + claims);
+                    .then(claimsText => {
+                        // Filter the claims text to only include the lines starting with 'Claim' and remove extraneous text
+                        const filteredClaimsText = claimsText
+                            .split('\n')
+                            .filter(claimLine => claimLine.startsWith('Claim'))
+                            .join('\n');
+                        console.log("FilteredClaimsText:\n" + filteredClaimsText);
 
                         // Construct the prompt text to receive the claims
-                        const prompt = getClaimVerificationPrompt(claims, sourceText);
+                        const prompt = getClaimVerificationPrompt(filteredClaimsText, sourceText);
                         console.log("Claim Verification Prompt: " + prompt);
 
                         getClaimVerificationReport(prompt)
@@ -166,52 +141,4 @@ function insertButtonCommentTaglineOldReddit(tagline, commentText) {
     }
 }
 
-// Function to insert button after a text node
-function insertButtonAfterTextNode(textNode, commentText) {
-    // Create a button element
-    let button = document.createElement('button');
-    button.textContent = 'Validate Claim';
-    button.type = 'button';  // Prevent form submission i.e. page reload
-    button.dataset.commentText = commentText;
-    button.addEventListener('click', onButtonClick);
-
-    textNode.appendChild(button);
-
-    // // Create a container for the text node and button
-    // let container = document.createElement('span');
-    //
-    // // Move the text node into the container
-    // container.appendChild(textNode.cloneNode());
-    //
-    // // Insert the button into the container
-    // container.appendChild(button);
-    //
-    // // Replace the original text node with the container
-    // textNode.parentNode.replaceChild(container, textNode);
-}
-
-// Call the findTextNodes function on the document body
-// findTextNodes(document.body, insertButtonAfterTextNode);
-
 findCommentTaglines(document.body, insertButtonCommentTaglineOldReddit);
-
-// Check if the document is already fully loaded
-// if (document.readyState === 'loading') {
-//     console.log("document.readyState === 'loading'");
-//     // If the document is still loading, add an event listener for DOMContentLoaded
-//     document.addEventListener('DOMContentLoaded', function() {
-//         // Call the findCommentTaglines function on the document body
-//         console.log("DOMContentLoaded");
-//         findCommentTaglines(document.body, insertButtonCommentTaglineOldReddit);
-//     });
-// } else {
-//     console.log("document.readyState !== 'loading'");
-//     // If it's already loaded, run the function immediately
-//     findCommentTaglines(document.body, insertButtonCommentTaglineOldReddit);
-// }
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Call the findCommentTaglines function on the document body
-//     console.log("DOMContentLoaded");
-//     findCommentTaglines(document.body, insertButtonCommentTaglineOldReddit);
-// });

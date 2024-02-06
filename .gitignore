@@ -1,5 +1,6 @@
 .env
 node_modules
+web_store_assets
 test_prompts
 **/.DS_STORE
 **/.idea
