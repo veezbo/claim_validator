@@ -1,5 +1,7 @@
 # ClaimValidator
-Increase trust on internet by checking whether the claims people make are really substantiated by their sources or not.
+Increase trust on internet by checking whether the claims people make are really substantiated by their sources or not. 
+
+[Chrome Extension Homepage](https://chromewebstore.google.com/detail/claimvalidator/clkakakhimoekhkimloikphebkmoinfe)
 
 ![ClaimValidator](dist/icons/icon_1024_original.png)
 
@@ -24,9 +26,10 @@ This is an open-source project in active development. Future updates will includ
 4. Support for more websites, including Twitter and Wikipedia
 5. Additional tools beyond just claim verification
 
-## Chrome Extension Release
-Currently under review by Google. 
-This process takes a bit longer because this extension requires permissions for all urls in order to extract the text from all sources. 
+## Chrome Extension Homepage
+https://chromewebstore.google.com/detail/claimvalidator/clkakakhimoekhkimloikphebkmoinfe
+
+The reviewal process takes a few business days because this extension requires permissions for all urls in order to extract the text from citations.
 
 ## Steps to Build
 1. Clone the repository
