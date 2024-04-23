@@ -1,12 +1,7 @@
 // Function to process the comment, extracting both text and hyperlinks
 import {URL_REGEX} from "./regex";
 import {extractText} from "./webpage";
-import {
-    getClaimExtractionPrompt,
-    getClaimVerificationPrompt,
-    getClaimVerificationReport,
-    getExtractedClaims
-} from "./prompt";
+import {getClaimsValidationReport} from "./report";
 
 function processComment(element) {
 
@@ -75,40 +70,17 @@ function onButtonClick(event) {
     if (urlMatch) {
         extractText(urlMatch[0])
             .then(sourceText => {
-
-                // Placeholder for now just to see if it works
-                const claimExtractorPrompt = getClaimExtractionPrompt(commentText);
-                console.log("ClaimExtractorPrompt: " + claimExtractorPrompt);
-                getExtractedClaims(claimExtractorPrompt)
-                    .then(claimsText => {
-                        // Filter the claims text to only include the lines starting with 'Claim' and remove extraneous text
-                        const filteredClaimsText = claimsText
-                            .split('\n')
-                            .filter(claimLine => claimLine.startsWith('Claim'))
-                            .join('\n');
-                        console.log("FilteredClaimsText:\n" + filteredClaimsText);
-
-                        // Construct the prompt text to receive the claims
-                        const prompt = getClaimVerificationPrompt(filteredClaimsText, sourceText);
-                        console.log("Claim Verification Prompt: " + prompt);
-
-                        getClaimVerificationReport(prompt)
-                            .then(report => {
-                                // TODO: Split this up with <br> to support multiple lines and prettier output
-                                reportDiv.textContent = report;
-                                event.target.parentNode.insertBefore(reportDiv, event.target.nextSibling);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                                reportDiv.textContent = `Error retrieving source: <<${error.message}>>`;
-                                event.target.parentNode.insertBefore(reportDiv, event.target.nextSibling);
-                            });
-
+                getClaimsValidationReport(commentText, sourceText)
+                    .then(report => {
+                         // TODO: Split this up with <br> to support multiple lines and prettier output
+                        reportDiv.textContent = report;
+                        event.target.parentNode.insertBefore(reportDiv, event.target.nextSibling);
                     })
                     .catch(error => {
                         console.error(error);
+                        reportDiv.textContent = `Error retrieving source: <<${error.message}>>`;
+                        event.target.parentNode.insertBefore(reportDiv, event.target.nextSibling);
                     });
-
             })
             .catch(error => {
                 console.error(error);

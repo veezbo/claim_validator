@@ -5,3 +5,4 @@ test_prompts
 **/.DS_STORE
 **/.idea
 **/*.zip
+**/__pycache__

@@ -9,7 +9,7 @@ export function extractText(url) {
 
     return new Promise((resolve, reject) => {
         // Send a message to the background script
-        chrome.runtime.sendMessage({url: base_url}, response => {
+        chrome.runtime.sendMessage({type: 'fetchPageContent', url: base_url}, response => {
             if (response.data === null) {
                 reject('Null response from background script: ' + response.error);
                 return;
