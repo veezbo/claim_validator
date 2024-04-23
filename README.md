@@ -27,14 +27,14 @@ This is an open-source project in active development. Future updates will includ
 5. Additional tools beyond just claim verification
 
 ## Chrome Extension Homepage
-https://chromewebstore.google.com/detail/claimvalidator/clkakakhimoekhkimloikphebkmoinfe
+[Extension Link](https://chromewebstore.google.com/detail/claimvalidator/clkakakhimoekhkimloikphebkmoinfe)
 
 The reviewal process takes a few business days because this extension requires permissions for all urls in order to extract the text from citations.
 
 ## Requirements to Build
 1. npm: https://www.npmjs.com/
-2. OpenRouter Account: https://openrouter.ai/
-3. Modal Account: https://modal.com/
+2. OpenRouter Account: https://openrouter.ai/  (market-efficient pricing for API access to various LLMs)  
+3. Modal Account: https://modal.com/  (currently free $30 per month credit)
 
 ## Steps to Build
 1. Clone the repository
