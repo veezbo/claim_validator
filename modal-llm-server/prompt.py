@@ -1,11 +1,11 @@
 def claim_extraction_prompt(text: str) -> str:
-    return f"""You are a claim extractor. You will receive a comment written on the internet containing potentially false statements and atleast one link (citation). Your job is to extract the claim or set of claims that the comment intended to support with the included citation. Ensure that you provide the claims written as factually as possible without making any reference to the writer, being as concise as possible. Output no more than 3 claims, prioritizing the most important claims if there are more.
+    return f"""You are a claim extractor. You will receive a comment written on the internet containing potentially false statements and atleast one link (citation). Your job is to extract the claim or set of claims that the comment intended to support with the included citation. Ensure that you provide the claims written as factually as possible without making any reference to the writer, being as concise as possible. Output exactly 1, 2, or 3 claims, prioritizing the most important claims if there are more.
 
 ## Written Comment
 {text}
 
 ## Output Instruction
-Now, please provide the list of one or more claims in the comment, ensuring that the claims are written without referring to yourself or the commentator. Do NOT refer to the commentator in the third person. Do NOT use the phrases "the writer," "the author," "the commentator," "I think," or "I am a commentator," or any similar phrases or you will be severely penalized. Be concise. Output no more than 3 claims. The following output format is expected:
+Now, please provide the list of one or more claims in the comment, ensuring that the claims are written without referring to yourself or the commentator. Do NOT refer to the commentator in the third person. Do NOT use the phrases "the writer," "the author," "the commentator," "I think," or "I am a commentator," or any similar phrases or you will be severely penalized. Be concise. Output exactly 1, 2, or 3 claims. The following output format is expected:
 
 Claim <1>: <Claim 1 Text>
 ...
