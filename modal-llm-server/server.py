@@ -38,8 +38,7 @@ async def claim_validation(request: Request) -> JSONResponse:
     # Set up with provider URL and API key. These can be swapped as needed.
     # NOTE: We are just using the openai library, but you can use any provider's models and/or API that supports this
     openai = OpenAI(
-        base_url="https://api.groq.com/openai/v1",  # If you have beta access to Groq, it's highly recommended!
-        # base_url="https://openrouter.ai/api/v1",  # Otherwise, you can use OpenRouter
+        base_url="https://openrouter.ai/api/v1",  # Otherwise, you can use OpenRouter
         api_key=os.environ["LLM_API_KEY"],
     )
 
@@ -86,9 +85,9 @@ async def extract_claims(openai: OpenAI, text: str) -> str:
     prompt = claim_extraction_prompt(text)
 
     # May need to make this async
-    response = openai.chat.completions.create(
+    response = await openai.chat.completions.create(
         messages=[{"role": "system", "content": prompt}],
-        model="llama3-8b-8192",
+        model="meta-llama/llama-3-8b-instruct:nitro",
     )
 
     return response.choices[0].message.content
@@ -98,9 +97,9 @@ async def validate_claims(openai: OpenAI, claims: list[str], source: str) -> str
     prompt = claim_validation_prompt(claims, source)
 
     # May need to make this async
-    response = openai.chat.completions.create(
+    response = await openai.chat.completions.create(
         messages=[{"role": "system", "content": prompt}],
-        model="mixtral-8x7b-32768",
+        model="mistralai/mixtral-8x7b-instruct:nitro",
     )
 
     return response.choices[0].message.content
